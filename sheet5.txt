@@ -1,0 +1,389 @@
+.586
+.MODEL FLAT
+INCLUDE io.h    
+.STACK 4096
+.DATA
+	num1 BYTE "Enter x",0
+	num2 BYTE "Enter y",0
+	num3 BYTE "Enter z",0
+	string BYTE 40 DUP(?)
+	value BYTE 11 DUP(?),0
+	res BYTE "the result is",0
+.CODE
+MainProc PROC
+	input num1,string,40
+	atod string
+	mov ecx,eax ;x
+
+	input num2,string,40
+	atod string
+	mov ebx,eax ;y
+
+	input num3,string,40
+	atod string         ;eax=z
+	imul  eax , -2      ;    -2z
+	add  ecx , ebx
+	add  eax , ecx
+	add  eax , 1 
+	neg  eax
+	dtoa value,eax
+	output res,value
+	 mov eax,0
+	ret
+	MainProc ENDP
+END
+******************************************************************************              **************************************************************************
+.586
+.MODEL FLAT
+INCLUDE io.h    
+.STACK 4096
+.DATA
+	num1 BYTE "Enter x",0
+	num2 BYTE "Enter y",0
+	num3 BYTE "Enter z",0
+	string BYTE 40 DUP(?)
+	value BYTE 11 DUP(?),0
+	res BYTE "the result is",0
+.CODE
+MainProc PROC
+	input num1,string,40
+	atod string
+	mov ecx,eax ;x
+
+	input num2,string,40
+	atod string
+	mov ebx,eax ;y
+	add ecx,ebx
+	imul ecx,2
+	input num3,string,40
+	atod string         ;eax=z
+	add  eax , ecx
+
+	dtoa value,eax
+	output res,value
+	 mov eax,0
+	ret
+	MainProc ENDP
+END
+*****************************************************************************                *************************************************************************
+.586
+.MODEL FLAT
+INCLUDE io.h    
+.STACK 4096
+.DATA
+	pro1 BYTE "Enter length",0
+	pro2 BYTE "Enter width",0
+	string BYTE 40 DUP(?)
+	value BYTE 11 DUP(?),0
+	res BYTE "the result is",0
+.CODE
+MainProc PROC
+	input pro1,string,40
+	atod string 
+	mov ecx,eax
+	imul ecx,2
+	input pro2,string,40
+	atod string 
+	imul eax,2
+	add eax,ecx
+	dtoa value,eax
+	output res,value
+
+	mov eax,0
+	ret
+	MainProc ENDP
+END
+*****************************************************************************              ***************************************************************************
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK
+.DATA
+num1 DWORD ?
+num2 DWORD ?
+num3 DWORD ?
+num4 DWORD ?
+prompt1 BYTE "Enter Grade 1 " , 0
+prompt2 BYTE "Enter Grade 2 " , 0
+prompt3 BYTE "Enter Grade 3 " , 0
+prompt4 BYTE "Enter Grade 4 " , 0
+string BYTE 40 DUP (?)
+res BYTE "SUM   " , 0
+sum DWORD 11 DUP (?) , 0
+res1 BYTE "AVERAGE   " , 0
+avg BYTE 11 DUP (?) ,"   remainder = "
+re BYTE 11 DUP(?)
+.CODE
+MainProc PROC
+input prompt1,string,40
+atod  string
+mov num1,eax
+
+input prompt2,string,40
+atod  string
+mov num2,eax
+
+input prompt3,string,40
+atod  string
+mov num3,eax
+
+input prompt4,string,40
+atod  string
+mov num4,eax
+add eax,num1
+add eax,num2
+add eax,num3
+dtoa sum,eax
+output res,sum
+
+
+
+mov ebx,4
+cdq
+div ebx
+dtoa avg,eax
+dtoa re ,edx
+output res1,avg
+
+
+mov eax,0
+ret
+MainProc ENDP
+END
+*********************************************************************************                 *******************************************************************
+
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK 4096
+.DATA
+   n1 DWORD ?
+   n2 DWORD ?
+   n3 DWORD ?
+   n4 DWORD ?
+   n5 DWORD ?
+   n6 DWORD ?
+   p BYTE "Enter Pennies " , 0
+   n BYTE "Enter Pennies " , 0
+   d BYTE "Enter Pennies " , 0
+   q BYTE "Enter Pennies " , 0
+   f BYTE "Enter Pennies " , 0
+   t BYTE "Enter Pennies " , 0
+   string BYTE 40 DUP (?) , 0
+   res BYTE"amount by dollar " , 0
+
+   res1 BYTE 11 DUP (?),"  remider =  "
+   re BYTE 11 DUP (?), "cent      ",0
+   sum BYTE "Sum " ,0
+   sum1 BYTE 11 DUP(?),0
+
+
+.CODE
+MainProc PROC
+   input p,string,40
+   atod  string
+   mov n1,eax
+
+   input n,string,40
+   atod  string
+   mov n2,eax
+
+   input t,string,40
+   atod  string
+   mov n3,eax
+
+   input q,string,40
+   atod  string
+   mov n4,eax
+
+   input f,string,40
+   atod  string
+   mov n5,eax
+
+   input d,string,40
+   atod  string
+   mov n6,eax
+   imul   eax,100
+   mov n6,eax
+
+   mov eax,n5
+  imul eax,50
+   add n6,eax
+
+   mov eax,n4
+   imul eax,25
+   add n6,eax
+
+   mov eax,n3
+   imul eax,10
+   add n6,eax
+
+   mov eax,n2
+   imul eax,5
+   add n6,eax
+
+   mov eax,n1
+   imul eax,1
+   add n6,eax
+
+   mov eax,n6
+   mov ebx,100
+   cdq
+   div ebx 
+   
+   dtoa res1,eax
+   dtoa re,edx
+   output res,res1
+   mov ecx,n1
+   add ecx,n2
+   add ecx,n3
+   add ecx,n4
+   add ecx,n5
+   add ecx,n5
+   dec ecx
+   dtoa sum1,ecx
+   output sum,sum1
+
+   
+   
+    
+
+
+
+mov eax,0
+ret
+MainProc ENDP
+END
+
+
+
+
+
+
+
+
+********************************************************************************                 *********************************************************************
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK 4096
+.DATA 
+   grade1 DWORD ? 
+   weight1 DWORD ? 
+   grade2 DWORD ? 
+   weight2 DWORD ? 
+   grade3 DWORD ? 
+   weight3 DWORD ? 
+   grade4 DWORD ? 
+   weight4 DWORD ?
+
+
+   n1 BYTE "Enter Grade 1 " , 0 
+   g1 BYTE "Enter Weight 1" , 0
+
+   n2 BYTE "Enter Grade 2 " , 0 
+   g2 BYTE "Enter Weight 2" , 0
+
+   n3 BYTE "Enter Grade 3 " , 0 
+   g3 BYTE "Enter Weight 3" , 0
+
+   n4 BYTE "Enter Grade 4 " , 0 
+   g4 BYTE "Enter Weight 4" , 0
+
+   string BYTE 40 DUP (?)
+
+   x BYTE "weighted sum " , 0
+
+   v BYTE "sum of weights " , 0
+ 
+
+   z BYTE "weighted average " , 0
+  
+   x1 BYTE 11 DUP (?) ,0
+   x2 BYTE 11 DUP (?) ,"       remainder = "   
+   re  BYTE 11 DUP (?)
+
+
+
+.CODE
+MainProc PROC
+   input n1,string,40
+   atod  string
+   mov  grade1,eax
+
+   input g1,string,40
+   atod  string 
+   mov  weight1,eax
+
+   input n2,string,40
+   atod  string
+   mov  grade2,eax
+
+   input g2,string,40
+   atod  string 
+   mov  weight2,eax
+
+   input n3,string,40
+   atod  string
+   mov  grade3,eax
+
+   input g3,string,40
+   atod  string 
+   mov  weight3,eax
+
+   input n4,string,40
+   atod  string
+   mov  grade4,eax
+
+   input g4,string,40
+   atod  string 
+   mov  weight4,eax
+
+   mul grade4
+   mov grade4,eax
+
+   mov eax,weight3
+   mul grade3
+   add grade4,eax
+
+    mov eax,weight2
+   mul grade2
+   add grade4,eax
+
+    mov eax,weight1
+   mul grade1
+   add grade4,eax
+   ;mov eax,grade4
+
+   dtoa x1,grade4
+   output x,x1
+
+
+   mov eax,weight1
+   add eax,weight2 
+   add eax,weight3 
+   add eax,weight4
+
+   dtoa x1,eax
+   output v,x1 
+
+   mov grade1,eax
+   mov eax,grade4
+   div grade1
+   dtoa x2,eax
+   dtoa re,edx
+   output z,x2
+
+
+
+
+ 
+   
+
+
+mov eax,0
+ret
+MainProc ENDP
+END
+MainProc ENDP
+END
